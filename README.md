@@ -2,6 +2,8 @@
 
 Cross-session long-term memory plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH).
 
+![Memory panel](https://raw.githubusercontent.com/Culeot/dsh-agent-memory/main/docs/memory-panel.png)
+
 [中文文档](README.zh-CN.md)
 
 ## What it does

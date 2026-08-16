@@ -2,6 +2,8 @@
 
 DeepSeek Harness(DSH)的跨会话长期记忆插件。
 
+![记忆面板](https://raw.githubusercontent.com/Culeot/dsh-agent-memory/main/docs/memory-panel.png)
+
 [English](README.md)
 
 ## 功能
