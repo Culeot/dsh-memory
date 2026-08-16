@@ -1,0 +1,21 @@
+node_modules/
+lib/
+test-out.log
+*.log
+.DS_Store
+
+research/session-extract/
+research/session-update-*.jsonl
+research/existing-titles.txt
+
+research/clean-*
+research/session-extract/
+
+# 内部文件,不进公开仓库
+STATE.md
+CHANGELOG.md
+research/
+session-sample.txt
+
+# npm credentials
+.npmrc

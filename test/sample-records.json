@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mem_8048ff2a79824920",
+    "content": "用户偏好: 喜欢深色主题",
+    "kind": "preference",
+    "tags": [
+      "用户偏好"
+    ],
+    "scope": "user",
+    "importance": 1,
+    "project": null,
+    "createdAt": "2026-08-14T05:30:45.863Z",
+    "updatedAt": "2026-08-14T05:30:45.863Z",
+    "accessedAt": null,
+    "accessCount": 0,
+    "expiresAt": null
+  },
+  {
+    "id": "mem_39d643dac9eb41df",
+    "content": "决策: 数学教辅用单色排版",
+    "kind": "decision",
+    "tags": [
+      "决策"
+    ],
+    "scope": "project",
+    "importance": 1,
+    "project": null,
+    "createdAt": "2026-08-14T05:30:46.863Z",
+    "updatedAt": "2026-08-14T05:30:46.863Z",
+    "accessedAt": null,
+    "accessCount": 0,
+    "expiresAt": null
+  },
+  {
+    "id": "mem_579d59627a9f49dd",
+    "content": "踩坑教训: markdown 分隔线会吞 answerline",
+    "kind": "lesson",
+    "tags": [
+      "踩坑教训"
+    ],
+    "scope": "project",
+    "importance": 1,
+    "project": null,
+    "createdAt": "2026-08-14T05:30:47.863Z",
+    "updatedAt": "2026-08-14T05:30:47.863Z",
+    "accessedAt": null,
+    "accessCount": 0,
+    "expiresAt": null
+  }
+]
