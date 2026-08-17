@@ -1,4 +1,4 @@
-/**
+﻿/**
  * dsh-agent-memory: cross-session long-term memory for DeepSeek Harness.
  *
  * One cordis plugin, three surfaces:
@@ -629,7 +629,7 @@ Rules:
 - kind: one of fact / preference / decision / lesson / todo / note. tags: short lowercase words. importance: 1 nice-to-know, 2 useful, 3 critical (eviction-proof). scope: user (applies everywhere) or project (this project only).
 - Near-duplicate entries merge automatically; do not re-create the same memory on purpose.
 - **Memory retrieval relevance is multi-dimensional — never single-indicator:** (1) semantic similarity (not just keyword overlap), (2) task relevance (does it directly help complete the current task?), (3) pattern match (same scenario pattern?), (4) causal link (prerequisite/cause/consequence?), (5) recency (recent may be better, but old memories have value too). Apply if ≥2 dimensions match; otherwise discard. Hot-count(auto-injected) memories are a safety net only — always run memory_recall for task-specific retrieval.
-- **Anti-decay rules:** The memory system itself can "decay" (forget rules over long conversations). Countermeasures: (1) memory_retrieval at task start acts as a fresh re-read of core rules; (2) the SAME mistake recurring twice triggers an automatic lesson-importance-3 nudge; (3) if you notice yourself drifting (e.g. thinking in English when the persona mandates Chinese), use memory_recall to retrieve the persona rules and re-ground yourself.`;
+- **Anti-decay rules:** The memory system itself can "decay" (forget rules over long conversations). Countermeasures: (1) memory_retrieval at task start acts as a fresh re-read of core rules; (2) the SAME mistake recurring twice triggers an automatic lesson-importance-3 nudge; (3) if you notice yourself drifting from your configured behavior, use memory_recall to retrieve your core rules and re-ground yourself.`;
 
 /** Shared canonical-output shape: author-only JSON node, pretty-printed. */
 function jsonOutput(): { schema: { type: 'json' }; render: (args: unknown, value: JsonValue) => Array<{ type: 'text'; text: string }> } {
@@ -640,7 +640,7 @@ function jsonOutput(): { schema: { type: 'json' }; render: (args: unknown, value
 }
 
 export async function apply(ctx: Context, config: Schemastery.TypeT<typeof Config>): Promise<void> {
-  // The memory domain is a process-wide singleton: `DomainFacility.open` rejects
+  // The memory domain is a process-wide singleton: "DomainFacility.open" rejects
   // a second open of the same name (already-open). A preset mounts per session,
   // so the first session opens the domain and every later session reuses it —
   // only the opener registers the close effect.
