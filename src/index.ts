@@ -64,8 +64,10 @@ export const Config = z.object({
    * — relevant-on-demand instead of broadcast.
    */
   injectEnabled: z.boolean().default(true),
-  /** How many recalled memories to inject per step (0 disables injection). */
+  /** Maximum memories to inject per step (0 disables injection). Actual count depends on relevance. */
   injectCount: z.number().min(0).max(10).default(3),
+  /** Minimum score threshold for injection (0 = no threshold, just use rank). */
+  injectMinScore: z.number().min(0).max(100).default(1.0),
   /** Max content chars per injected memory summary. */
   injectMaxChars: z.number().min(40).max(400).default(120),
   /** Default max chars of a recalled record's content shown to the model. */
@@ -915,15 +917,22 @@ export async function apply(ctx: Context, config: Schemastery.TypeT<typeof Confi
       let rec: RecallResult;
       try {
         // Read-only recall: passive injection must not write (touch) the store.
-        rec = await core.recall({ query, limit: config.injectCount, touch: false });
+        // Retrieve more than injectCount so we can filter by relevance.
+        rec = await core.recall({ query, limit: Math.max(config.injectCount, 10), touch: false });
       } catch {
         return decision; // never break the agent loop over memory
       }
       if (rec.results.length === 0) return decision;
-      const key = rec.results.map((r) => r.id).sort().join(',');
+      // Filter by minimum score threshold, then take top injectCount.
+      const minScore = config.injectMinScore;
+      const filtered = minScore > 0
+        ? rec.results.filter((r) => r.score >= minScore).slice(0, config.injectCount)
+        : rec.results.slice(0, config.injectCount);
+      if (filtered.length === 0) return decision; // nothing relevant enough
+      const key = filtered.map((r) => r.id).sort().join(',');
       if (key === lastInjectedKey) return decision; // same topic, already injected
       lastInjectedKey = key;
-      const text = renderInjection(rec.results, config.injectMaxChars);
+      const text = renderInjection(filtered, config.injectMaxChars);
       const memMessage = createUserMessage({
         content: [{ type: 'text', text }],
         source: {
