@@ -13,7 +13,9 @@ Remembers facts, preferences, decisions, and lessons across sessions, so a new s
 ## Features
 
 - **Cross-session persistence** — write in session A, recall in session B; new sessions pick up where old ones left off.
-- **Relevant memories injected on demand** — before each model step, the plugin recalls the most relevant memories for the user's current message (via DSH's `agent/pre-step` hook) and injects up to `injectCount` short summaries (default 3). You say "continue the math workbook project" → the project's decisions and lessons appear automatically. No every-turn broadcast of a fixed hot set — you only pay for memories that match what you just said.
+- **Relevance-threshold injection** — before each model step, the plugin recalls memories matching the user's current message, **filters by minimum relevance score** (`injectMinScore`), and injects up to `injectCount` that pass the threshold. Low-relevance memories are discarded — you only pay for what actually matters.
+- **Multi-dimensional relevance** — scoring combines semantic similarity, task relevance, pattern matching, causal linkage, and recency (not just keyword overlap). A memory is used when ≥2 dimensions match, reducing noise from coincidental keyword hits.
+- **Anti-decay rules** — the protocol section includes self-reinforcing rules: task-start recall re-reads core rules, recurring mistakes auto-solidify as lessons, and language drift triggers self-correction.
 - **Self-correction loop** — when the same error (same code/message) fires repeatedly (`lessonizeAfter`, default 2), the plugin nudges the agent to write it as an importance-3 lesson; the lesson then auto-injects on related topics, preventing recurrence. User corrections are covered by the memory protocol (write the lesson right away).
 - **Built-in hygiene** — capacity cap with lowest-value eviction first; near-duplicate entries merge instead of piling up (Jaccard ≥ 0.7); optional TTL expiry; deleting importance-3 records requires an explicit confirm.
 - **Chinese-friendly search** — Chinese text is indexed by bigrams plus single-char fallback plus a BM25 term-frequency signal, English by words, plus exact substring matching. Works without a tokenizer or any ML dependency.
@@ -92,6 +94,7 @@ All options are optional:
 | `maxContentChars` | 2000 | Max content length per record. |
 | `injectEnabled` | true | Per-step injection of relevant memories (via `agent/pre-step`). |
 | `injectCount` | 3 | Max memories injected per step (0 disables). |
+| `injectMinScore` | 1.0 | Minimum relevance score to inject (0 = no threshold, just rank). |
 | `injectMaxChars` | 120 | Max chars per injected memory summary. |
 | `lessonizeEnabled` | true | Auto-nudge to solidify repeated errors as lessons. |
 | `lessonizeAfter` | 2 | Same error fingerprint occurrences before nudging. |
