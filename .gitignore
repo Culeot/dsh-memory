@@ -4,18 +4,21 @@ test-out.log
 *.log
 .DS_Store
 
-research/session-extract/
-research/session-update-*.jsonl
-research/existing-titles.txt
-
-research/clean-*
-research/session-extract/
-
-# 内部文件,不进公开仓库
+# Internal files, not for public repo
 STATE.md
 CHANGELOG.md
 research/
 session-sample.txt
+discussion-post.md
 
 # npm credentials
 .npmrc
+
+# Temp scripts
+fix*.mjs
+gh-push.mjs
+*.token*
+
+# IDE
+.vscode/
+.idea/
